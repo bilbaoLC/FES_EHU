@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vibraciones atómicas 1D</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header><p class="eyebrow">Física del estado sólido · Laboratorio interactivo</p><h1>Vibraciones atómicas en cadenas unidimensionales</h1><p>Relaciones de dispersión y modos normales de vibración</p></header>
+<nav class="tabs" aria-label="Modelo"><button class="tab active" data-model="mono">Cadena monoatómica</button><button class="tab" data-model="di">Cadena diatómica <small>masas iguales · K y G</small></button></nav>
+<main>
+ <aside class="card controls">
+  <section><h2>Modelo físico</h2><svg id="scheme" class="scheme" role="img" aria-label="Esquema de la cadena"></svg><div id="formula" class="formula"></div><p class="note">Primera zona de Brillouin: −π/a ≤ k ≤ π/a</p></section>
+  <section><h2>Controles</h2>
+   <label for="kRange"><span>Vector de onda <output id="kOut"></output></span><input id="kRange" type="range" min="-1" max="1" step="0.01" value="0.4"><span class="ticks"><i>−π/a</i><i>0</i><i>+π/a</i></span></label>
+   <div id="branchControl" hidden><span class="label">Rama</span><div class="seg"><button data-branch="acoustic" class="active">Acústica</button><button data-branch="optical">Óptica</button></div></div>
+   <label id="gControl" hidden><span>Relación G/K <output id="gOut">0,60</output></span><input id="gRange" type="range" min="0.1" max="2" step="0.01" value="0.6"><span class="ticks"><i>0,1</i><i>1</i><i>2</i></span></label>
+   <label><span>Amplitud visual <output id="ampOut"></output></span><input id="ampRange" type="range" min="0.02" max="0.18" step="0.01" value="0.1"></label>
+   <label><span>Velocidad <output id="speedOut"></output></span><input id="speedRange" type="range" min="0.2" max="2" step="0.1" value="0.8"></label>
+   <div class="actions"><button id="play">Pausar</button><button id="reset">Reiniciar fase</button></div>
+   <div class="presets"><button data-k="-1">k = −π/a</button><button data-k="0">k = 0</button><button data-k="1">k = +π/a</button></div>
+   <label class="check"><input id="showEq" type="checkbox" checked> Posiciones de equilibrio</label><label class="check"><input id="showCells" type="checkbox" checked> Celdas primitivas</label>
+  </section>
+ </aside>
+ <section class="workspace">
+  <article class="card plot-card"><div class="title-row"><div><p class="eyebrow">DISPERSIÓN</p><h2>Frecuencia angular frente a vector de onda</h2></div><div id="legend"></div></div><canvas id="plot" aria-label="Gráfica interactiva de dispersión"></canvas><p class="hint">Haz clic o arrastra para escoger k. En el modelo diatómico, pulsa una curva para elegir la rama.</p></article>
+  <div class="readouts"><div><span>Vector de onda</span><strong id="readK"></strong></div><div><span>Frecuencia normalizada</span><strong id="readW"></strong></div><div><span>Rama</span><strong id="readBranch"></strong></div><div><span>Velocidad de grupo</span><strong id="readV"></strong></div></div>
+  <article class="card animation-card"><div class="title-row"><div><p class="eyebrow">MODO NORMAL</p><h2>Desplazamientos longitudinales</h2></div><span id="status" class="status">Reproduciendo</span></div><canvas id="chain" aria-label="Animación de la cadena"></canvas><div id="modeFormula" class="formula compact"></div></article>
+  <article id="explanation" class="card explanation"></article>
+ </section>
+</main>
+<footer>a = 1, m = 1 y K = 1 como unidades internas · La velocidad visual no altera ω.</footer>
+<script type="module" src="js/app.js"></script>
+</body></html>
