@@ -1,0 +1,38 @@
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Configuración local de editores
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Temporales, copias y registros
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.pid
+.cache/
+tmp/
+temp/
+
+# Dependencias y resultados generados
+node_modules/
+dist/
+build/
+coverage/
+test-results/
+playwright-report/
+screenshots/
+
+# Cachés de utilidades Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+

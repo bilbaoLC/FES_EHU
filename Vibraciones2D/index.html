@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio interactivo de vibraciones en una red cuadrada monoatómica 2D.">
+  <title>Vibraciones en una red cuadrada 2D</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a class="brand" href="../Vibraciones1D/index.html">FES · Laboratorios</a>
+      <div><a href="../Vibraciones1D/index.html">Cadena 1D</a><a class="active" href="./index.html" aria-current="page">Red cuadrada 2D</a></div>
+    </nav>
+    <div class="hero-copy">
+      <p class="kicker">FÍSICA DEL ESTADO SÓLIDO · LABORATORIO INTERACTIVO</p>
+      <h1>Vibraciones en una red cuadrada 2D</h1>
+      <p>Red monoatómica, resortes centrales idénticos y acoplamiento exclusivo entre primeros vecinos.</p>
+      <div class="assumptions"><span>1 átomo/celda</span><span>Primeros vecinos</span><span>Movimiento en el plano</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card theory" aria-labelledby="modelo-title">
+      <div><p class="kicker">MODELO FÍSICO</p><h2 id="modelo-title">Dos polarizaciones cartesianas desacopladas</h2></div>
+      <div class="equations">
+        <p><strong>D(k)</strong> = <span class="matrix"><i>2K/m [1−cos(k<sub>x</sub>a)]</i><i>0</i><i>0</i><i>2K/m [1−cos(k<sub>y</sub>a)]</i></span></p>
+        <p>ω<sub>x</sub> = 2√(K/m)|sin(k<sub>x</sub>a/2)| &nbsp;&nbsp; ω<sub>y</sub> = 2√(K/m)|sin(k<sub>y</sub>a/2)|</p>
+      </div>
+      <p class="normalization">q<sub>x</sub> = k<sub>x</sub>a · q<sub>y</sub> = k<sub>y</sub>a · Ω = ω/√(K/m) · Primera zona: −π ≤ q<sub>x</sub>, q<sub>y</sub> ≤ π</p>
+    </section>
+
+    <div class="dashboard">
+      <section class="card surface-card">
+        <div class="section-head"><div><p class="kicker">DISPERSIÓN</p><h2>Superficies Ω(q<sub>x</sub>, q<sub>y</sub>)</h2></div><div class="legend"><label><input id="showSurfaceX" type="checkbox" checked><i class="x"></i> Polarización x</label><label><input id="showSurfaceY" type="checkbox" checked><i class="y"></i> Polarización y</label></div></div>
+        <canvas id="surface" aria-label="Gráfica tridimensional interactiva de las dos superficies de dispersión"></canvas>
+        <p class="canvas-help">Arrastra para rotar · Rueda para ampliar · Doble clic para restaurar la vista</p>
+      </section>
+
+      <aside class="card controls">
+        <p class="kicker">CONTROLES DEL MODO</p><h2>Vector de onda y polarización</h2>
+        <label><span>k<sub>x</sub>a <output id="qxOut"></output></span><input id="qx" type="range" min="-3.14159265" max="3.14159265" step="0.01" value="1.57079633"><small>−π <b>0</b> +π</small></label>
+        <label><span>k<sub>y</sub>a <output id="qyOut"></output></span><input id="qy" type="range" min="-3.14159265" max="3.14159265" step="0.01" value="0"><small>−π <b>0</b> +π</small></label>
+        <fieldset><legend>Polarización</legend><div class="segmented"><button class="active" data-branch="x">ε<sub>x</sub> = (1, 0)</button><button data-branch="y">ε<sub>y</sub> = (0, 1)</button></div></fieldset>
+        <label><span>Amplitud visual <output id="ampOut"></output></span><input id="amplitude" type="range" min="0.03" max="0.25" step="0.01" value="0.14"></label>
+        <label><span>Velocidad visual <output id="speedOut"></output></span><input id="speed" type="range" min="0.2" max="2" step="0.1" value="0.8"></label>
+        <div class="button-row"><button id="play" class="primary">Pausar</button><button id="reset">Reiniciar tiempo</button></div>
+        <div class="presets" aria-label="Puntos de alta simetría"><button data-point="G">Γ <small>(0,0)</small></button><button data-point="X">X <small>(π,0)</small></button><button data-point="M">M <small>(π,π)</small></button></div>
+        <label class="check"><input id="showCells" type="checkbox" checked> Mostrar celdas primitivas</label>
+        <label class="check"><input id="showEquilibrium" type="checkbox" checked> Mostrar equilibrio</label>
+      </aside>
+
+      <section class="card bz-card">
+        <div class="section-head"><div><p class="kicker">ESPACIO RECÍPROCO</p><h2>Primera zona de Brillouin</h2></div><span>Γ–X–M–Γ</span></div>
+        <canvas id="brillouin" aria-label="Primera zona de Brillouin interactiva"></canvas>
+        <p class="canvas-help">Haz clic o arrastra el marcador para seleccionar k.</p>
+      </section>
+
+      <section class="card lattice-card">
+        <div class="section-head"><div><p class="kicker">ESPACIO REAL</p><h2>Movimiento de la red 11 × 11</h2></div><span id="motionStatus" class="status">Reproduciendo</span></div>
+        <canvas id="lattice" aria-label="Animación de desplazamientos atómicos en la red cuadrada"></canvas>
+        <p class="canvas-help">La amplitud está amplificada visualmente; los desplazamientos físicos son pequeños frente a a.</p>
+      </section>
+    </div>
+
+    <section class="readouts" aria-label="Valores físicos del modo">
+      <div><span>Vector de onda</span><strong id="readK"></strong></div><div><span>Frecuencia Ω</span><strong id="readOmega"></strong></div><div><span>Polarización</span><strong id="readPolarization"></strong></div><div><span>Fase espacial</span><strong id="readPhase"></strong></div>
+    </section>
+
+    <section class="card interpretation">
+      <div><p class="kicker">LECTURA FÍSICA</p><h2 id="explanationTitle"></h2><p id="explanation"></p></div>
+      <div class="mode-equation"><strong>Modo normal</strong><p>u<sub>nₓ,nᵧ</sub>(t) = Re[ ε e<sup>i(k·R−ωt)</sup> ]</p><small>R<sub>nₓ,nᵧ</sub> = n<sub>x</sub>a x̂ + n<sub>y</sub>a ŷ</small></div>
+    </section>
+
+    <aside class="warning"><strong>Modos blandos del modelo ideal</strong><p>Con resortes centrales solamente entre primeros vecinos, Ω<sub>x</sub> = 0 cuando k<sub>x</sub> = 0 y Ω<sub>y</sub> = 0 cuando k<sub>y</sub> = 0, aunque la otra componente de k no sea nula. La red carece de rigidez lineal frente a esos desplazamientos transversales; no es un error de la gráfica.</p></aside>
+  </main>
+  <footer>Modelo armónico ideal · a, m y K se conservan en las ecuaciones · Aplicación estática compatible con GitHub Pages</footer>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
